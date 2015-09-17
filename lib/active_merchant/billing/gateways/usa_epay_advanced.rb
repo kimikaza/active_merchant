@@ -414,6 +414,30 @@ module ActiveMerchant #:nodoc:
         end
       end
 
+      # Get customer data
+      #
+      # ==== Required
+      # * <tt>:customer_number</tt>
+      #
+      def get_customer(options={})
+        requires! options, :customer_number
+
+        request = build_request(__method__, options)
+        commit(__method__, request)
+      end
+
+      # Get customer transaction history data
+      #
+      # ==== Required
+      # * <tt>:customer_number</tt>
+      #
+      def get_customer_history(options={})
+        requires! options, :customer_number
+
+        request = build_request(__method__, options)
+        commit(__method__, request)
+      end
+
       # Enable a customer for recurring billing.
       #
       # Note: Customer does not need to have all recurring parameters to succeed.
@@ -1053,6 +1077,22 @@ module ActiveMerchant #:nodoc:
       end
 
       # Customer ======================================================
+
+      #TODO COMMENT AND TEST AND EVERYTHING
+      def build_get_customer(soap, options)
+        soap.tag! "ns1:getCustomer" do
+          build_token soap, options
+          build_tag soap, :integer, 'CustNum', options[:customer_number]
+        end
+      end
+
+      #TODO COMMENT AND TEST AND EVERYTHING
+      def build_get_customer_history(soap, options)
+        soap.tag! "ns1:getCustomerHistory" do
+          build_token soap, options
+          build_tag soap, :integer, 'CustNum', options[:customer_number]
+        end
+      end
 
       def build_add_customer(soap, options)
         soap.tag! "ns1:addCustomer" do

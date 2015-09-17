@@ -203,6 +203,18 @@ class UsaEpayAdvancedTest < Test::Unit::TestCase
     assert_nil response.authorization
   end
 
+  def test_successful_get_customer
+    @options.merge!(@customer_options)
+    @gateway.expects(:ssl_post).returns(successful_customer_response('getCustomer'))
+
+    assert response = @gateway.update(@options[:customer_number], @options)
+    assert_instance_of Response, response
+    assert response.test?
+    assert_success response
+    assert_equal 'true', response.message
+    assert_nil response.authorization
+  end
+
   def test_successful_quick_update_customer
     @options.merge!(@customer_options)
     @gateway.expects(:ssl_post).returns(successful_quick_update_customer_response('quickUpdateCustomer'))

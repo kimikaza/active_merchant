@@ -179,6 +179,22 @@ class RemoteUsaEpayAdvancedTest < Test::Unit::TestCase
     assert response.params['update_customer_return']
   end
 
+  def test_get_customer
+    response = @gateway.add_customer(@options.merge(@customer_options))
+    customer_number = response.params['add_customer_return']
+
+    response = @gateway.get_customer(:customer_number => customer_number)
+    assert response.params['get_customer_return']['item']
+  end
+
+  def test_get_customer_history
+    response = @gateway.add_customer(@options.merge(@customer_options))
+    customer_number = response.params['add_customer_return']
+
+    response = @gateway.get_customer_history(:customer_number => customer_number)
+    assert response.params['get_customer_return']['item']
+  end
+
   def test_quick_update_customer
     response = @gateway.add_customer(@options.merge(@customer_options))
     customer_number = response.params['add_customer_return']
