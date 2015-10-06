@@ -1098,9 +1098,9 @@ module ActiveMerchant #:nodoc:
         soap.tag! "ns1:addCustomer" do
           build_token soap, options
           build_customer_data soap, options
-          build_tag soap, :double, 'Amount', amount(options[:amount])
-          build_tag soap, :double, 'Tax', amount(options[:tax])
-          build_tag soap, :string, 'Next', options[:next].strftime("%Y-%m-%d") if options[:next]
+          # build_tag soap, :double, 'Amount', amount(options[:amount])
+          # build_tag soap, :double, 'Tax', amount(options[:tax])
+          # build_tag soap, :string, 'Next', options[:next].strftime("%Y-%m-%d") if options[:next]
         end
       end
 
@@ -1334,6 +1334,9 @@ module ActiveMerchant #:nodoc:
           build_billing_address soap, options
           build_customer_payments soap, options
           build_custom_fields soap, options
+          build_tag soap, :double, 'Amount', amount(options[:amount])
+          build_tag soap, :double, 'Tax', amount(options[:tax])
+          build_tag soap, :string, 'Next', options[:next].strftime("%Y-%m-%d") if options[:next]
         end
       end
 
